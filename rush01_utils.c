@@ -42,9 +42,9 @@ void	print_views(uint8_t *views, int map_size)
 	return ;
 }
 
-void	print_4x4_board(t_pos *map, uint8_t size)
+void	print_board(t_pos *map, uint8_t size)
 {
-	int	i;
+	int		i;
 	char	c;
 
 	printf("print_board has entered the chat\n");

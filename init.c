@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:59 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 11:05:10 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 13:30:08 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_map	init_map(t_map *map, char *views)
 	{
 		map->map[i].x = i % map->size;
 		map->map[i].y = i / map->size;
-		map->map[i].value = 0;
+		map->map[i].value = 1;
 		map->map[i].is_set = false;
 		i++;
 	}
