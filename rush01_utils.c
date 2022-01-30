@@ -59,7 +59,6 @@ void	print_board(t_pos *map, uint8_t size)
 			write(1, "\n", 1);
 		i++;
 	}
-	return ;
 }
 
 bool	is_digit(char c)

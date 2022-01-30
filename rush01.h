@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 13:58:20 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 16:54:27 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_map
 
 //INITIALIZATION
 uint8_t	get_map_size(int argc, char *const *argv);
-t_map	init_map(t_map *map, char *views);
+bool	init_map(t_map *map, char *views);
 
 //CHECKER
 bool	is_solved(t_map *map);
@@ -56,9 +56,9 @@ uint8_t	left_view_count(t_map *map, uint8_t pos);
 uint8_t	right_view_count(t_map *map, uint8_t pos);
 
 //SOLVING
-bool	place_known_values(t_map *map);
-bool	bruteforce_solver(t_map *map);
+void	place_known_values(t_map *map);
 bool	simple_bruteforce(t_map *map, uint8_t pos);
+bool	solver(t_map *map, uint8_t pos);
 
 //UTILS
 int		ft_sqrt(int nb);

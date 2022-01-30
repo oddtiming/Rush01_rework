@@ -1,17 +1,15 @@
 #include "rush01.h"
 
-static bool place_top(t_map *map)
+static void place_top(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
 
-	printf("in place_top, map->size = %d\n", map->size);
 	i = 0;
 	while (i < map->size)
 	{
 		if (map->top_view[i] == 1)
 		{
-	printf("place_top found that map->top_view[%d] == 1\n", i);
 			map->map[i].value = map->size;
 			map->map[i].is_set = true;
 		}
@@ -20,16 +18,16 @@ static bool place_top(t_map *map)
 			j = 0;
 			while (++j <= map->size)
 			{
-			map->map[(j - 1) * map->size + i].value = j;
-			map->map[(j - 1) * map->size + i].is_set = true;
+				map->map[(j - 1) * map->size + i].value = j;
+				map->map[(j - 1) * map->size + i].is_set = true;
 			}
 		}
 		i++;
 	}
-	return (0);
+	return;
 }
 
-static bool place_bottom(t_map *map)
+static void place_bottom(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -47,16 +45,16 @@ static bool place_bottom(t_map *map)
 			j = 0;
 			while (++j <= map->size)
 			{
-			map->map[(map->size - j) * map->size + i].value = j;
-			map->map[(map->size - j) * map->size + i].is_set = true;
+				map->map[(map->size - j) * map->size + i].value = j;
+				map->map[(map->size - j) * map->size + i].is_set = true;
 			}
 		}
 		i++;
 	}
-	return (0);
+	return;
 }
 
-static bool place_left(t_map *map)
+static void place_left(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -74,17 +72,17 @@ static bool place_left(t_map *map)
 			j = 0;
 			while (++j <= map->size)
 			{
-			map->map[i * map->size + (j - 1)].value = j;
-			map->map[i * map->size + (j - 1)].is_set = true;
+				map->map[i * map->size + (j - 1)].value = j;
+				map->map[i * map->size + (j - 1)].is_set = true;
 			}
 		}
 
 		i++;
 	}
-	return (0);
+	return;
 }
 
-static bool place_right(t_map *map)
+static void place_right(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -109,19 +107,15 @@ static bool place_right(t_map *map)
 
 		i++;
 	}
-	return (0);
+	return;
 }
 
-bool	place_known_values(t_map *map)
+void	place_known_values(t_map *map)
 {
-	if (place_top(map))
-		return (1);
-	if (place_bottom(map))
-		return (1);
-	if (place_left(map))
-		return (1);
-	if (place_right(map))
-		return (1);
+	place_top(map);
+	place_bottom(map);
+	place_left(map);
+	place_right(map);
 	
-	return (0);
+	return ;
 }

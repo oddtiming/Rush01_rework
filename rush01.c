@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 13:10:59 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:29:06 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,17 @@ int	main(int argc, char *const *argv)
 	if (map_size == 0)
 		write(2, "Error\n", sizeof("Error\n"));
 	
-	init_map(&map, argv[1]);
-	if (!map.views_key || !map.map)
+	if (init_map(&map, argv[1]))
 		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
 
-	print_views(map.views_key, map.size);
-	print_board(map.map, map.size);
+	// print_views(map.views_key, map.size);
+	// print_board(map.map, map.size);
 
-	// bruteforce_solver(&map);
-	simple_bruteforce(&map, 0);
+	// simple_bruteforce(&map, 0);
 
-	// if (place_known_values(&map))
-	// 	write(2, "known_values error\n", sizeof("known_values error\n"));
+	place_known_values(&map);
+	if (solver(&map, 0))
+		exit(1);
 
 	// printf("after place_known_values:\n");	
 	// print_board(map.map, map.size);
