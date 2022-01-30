@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 17:29:06 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:57:10 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,18 @@ uint8_t	get_map_size(int argc, char *const *argv)
 				biggest = argv[1][i];
 			nb_views += 1;
 		}
-		else if ( !(argv[1][i] == ' ' && is_digit(argv[1][i - 1])) )
+		else if (!(argv[1][i] == ' ' && is_digit(argv[1][i - 1])))
 			return (0);
 		i++;
 	}
-	// printf("nb_views = %d\n", nb_views);
 	if (nb_views < VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4)
 		return (0);
 	return (nb_views / 4);
 }
 
+// print_views(map.views_key, map.size);
+// print_board(map.map, map.size);
+// simple_bruteforce(&map, 0);
 int	main(int argc, char *const *argv)
 {
 	t_map	map;
@@ -57,20 +59,10 @@ int	main(int argc, char *const *argv)
 	map.size = map_size;
 	if (map_size == 0)
 		write(2, "Error\n", sizeof("Error\n"));
-	
 	if (init_map(&map, argv[1]))
 		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
-
-	// print_views(map.views_key, map.size);
-	// print_board(map.map, map.size);
-
-	// simple_bruteforce(&map, 0);
-
 	place_known_values(&map);
 	if (solver(&map, 0))
 		exit(1);
-
-	// printf("after place_known_values:\n");	
-	// print_board(map.map, map.size);
 	return (0);
 }

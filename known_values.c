@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   known_values.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/30 18:00:35 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/01/30 18:02:17 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rush01.h"
 
-static void place_top(t_map *map)
+static void	place_top(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -24,10 +36,10 @@ static void place_top(t_map *map)
 		}
 		i++;
 	}
-	return;
+	return ;
 }
 
-static void place_bottom(t_map *map)
+static void	place_bottom(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -51,10 +63,10 @@ static void place_bottom(t_map *map)
 		}
 		i++;
 	}
-	return;
+	return ;
 }
 
-static void place_left(t_map *map)
+static void	place_left(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -76,13 +88,12 @@ static void place_left(t_map *map)
 				map->map[i * map->size + (j - 1)].is_set = true;
 			}
 		}
-
 		i++;
 	}
-	return;
+	return ;
 }
 
-static void place_right(t_map *map)
+static void	place_right(t_map *map)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -104,10 +115,9 @@ static void place_right(t_map *map)
 				map->map[i * map->size + (map->size - j)].is_set = true;
 			}
 		}
-
 		i++;
 	}
-	return;
+	return ;
 }
 
 void	place_known_values(t_map *map)
@@ -116,6 +126,5 @@ void	place_known_values(t_map *map)
 	place_bottom(map);
 	place_left(map);
 	place_right(map);
-	
 	return ;
 }

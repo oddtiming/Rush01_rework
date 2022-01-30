@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solver.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/30 17:55:31 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/01/30 17:56:37 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rush01.h"
 
 //This solver assumes known values have been placed
 bool	solver(t_map *map, uint8_t pos)
 {
-	// printf("entered solver with pos = %d\n", pos);
 	if (pos < (map->size * map->size - 1))
 	{
 		while (map->map[pos].is_set)
@@ -21,14 +32,10 @@ bool	solver(t_map *map, uint8_t pos)
 		while (map->map[pos].value <= map->size)
 		{
 			if (is_solved(map))
-			{
-				print_board(map->map, map->size);
-				// printf("board is solved!\n");
-				return (0);
-			}
+				return (print_board(map->map, map->size));
 			map->map[pos].value += 1;
 		}
 		return (1);
 	}
-	return(0);
+	return (0);
 }

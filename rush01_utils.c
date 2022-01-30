@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rush01_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/30 17:57:48 by iyahoui-          #+#    #+#             */
+/*   Updated: 2022/01/30 18:09:25 by iyahoui-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rush01.h"
 
 int	ft_sqrt(int nb)
@@ -33,7 +45,7 @@ void	print_views(uint8_t *views, int map_size)
 	{
 		c = views[i] + '0';
 		write (1, &c, 1);
-		if ((i + 1) % map_size)	//to adjust for different index
+		if ((i + 1) % map_size)
 			write (1, " ", 1);
 		else
 			write (1, "\n", 1);
@@ -42,14 +54,13 @@ void	print_views(uint8_t *views, int map_size)
 	return ;
 }
 
-void	print_board(t_pos *map, uint8_t size)
+bool	print_board(t_pos *map, uint8_t size)
 {
 	int		i;
 	char	c;
 
-	printf("print_board has entered the chat\n");
 	i = 0;
-	while (i < size*size)
+	while (i < size * size)
 	{
 		c = map[i].value + '0';
 		write (1, &c, 1);
@@ -59,6 +70,7 @@ void	print_board(t_pos *map, uint8_t size)
 			write(1, "\n", 1);
 		i++;
 	}
+	return (0);
 }
 
 bool	is_digit(char c)
