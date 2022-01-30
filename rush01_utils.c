@@ -24,16 +24,39 @@ int	ft_sqrt(int nb)
 
 void	print_views(uint8_t *views, int map_size)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
+	write(1, " view\n", sizeof(" view\n"));
 	while (i < map_size * 4)
 	{
-		write (1, &views[i], 1);
+		c = views[i] + '0';
+		write (1, &c, 1);
 		if ( (i + 1) % map_size == 0)	//to adjust for different index
 			write (1, "\n", 1);
 		else
 			write (1, " ", 1);
+		i++;
+	}
+	return ;
+}
+
+void	print_4x4_board(t_pos *map, uint8_t size)
+{
+	int	i;
+	char	c;
+
+	printf("print_board has entered the chat\n");
+	i = 0;
+	while (i < size*size)
+	{
+		c = map[i].value + '0';
+		write (1, &c, 1);
+		if ((i + 1) % size)
+			write (1, " ", 1);
+		else
+			write(1, "\n", 1);
 		i++;
 	}
 	return ;

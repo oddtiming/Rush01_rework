@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/29 19:32:41 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 11:01:40 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ bool	place_known_values(t_map *map);
 int		ft_sqrt(int nb);
 bool	is_digit(char c);
 void	print_views(uint8_t *views, int map_size);
+void	print_4x4_board(t_pos *map, uint8_t size);
 
 #endif

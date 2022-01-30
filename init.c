@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:59 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 10:38:11 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 11:05:10 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_map	init_map(t_map *map, char *views)
 		return (*map);
 	i = -1;
 	while (++i < map->size * 4)
-		map->views_key[i] = views[2*i];
+		map->views_key[i] = (views[2*i] - '0');
 	map->top_view		= &map->views_key[0 * map->size];
 	map->bottom_view	= &map->views_key[1 * map->size];
 	map->left_view		= &map->views_key[2 * map->size];
