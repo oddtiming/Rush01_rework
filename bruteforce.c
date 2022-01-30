@@ -1,5 +1,44 @@
 #include "rush01.h"
 
+bool	there_are_duplicates(t_map *map)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	//CHECK COLUMNS
+	while (i < map->size)
+	{
+		j = 0;
+		while (j < map->size)
+		{
+			k = j;
+			while (++k < map->size)
+				if (map->map[i + k * map->size].value == map->map[i + j * map->size].value)
+					return (1);
+			j++;
+		}
+		i++;
+	}
+	j = 0;
+	//CHECK COLUMNS
+	while (j < map->size)
+	{
+		i = 0;
+		while (i < map->size)
+		{
+			k = i;
+			while (++k < map->size)
+				if (map->map[j * map->size + k].value == map->map[j * map->size + i].value)
+					return (1);
+			i++;
+		}
+		j++;
+	}
+	return (0);
+}
+
 uint8_t	top_view_count(t_map *map, uint8_t pos)
 {
 	int	view_count;
@@ -89,28 +128,22 @@ bool	is_solved(t_map *map)
 	int	i;
 
 	i = 0;
+	if (there_are_duplicates(map))
+		return (0);
 	while (i < 4*map->size)
 	{
 		if (i / 4 == 0)
-		{
 			if (top_view_count(map, i % 4) != map->top_view[i % 4])
 				return (0);
-		}
 		else if (i / 4 == 1)
-		{
 			if (bottom_view_count(map, i % 4) != map->bottom_view[i % 4])
 				return (0);
-		}
 		else if (i / 4 == 2)
-		{
 			if (left_view_count(map, i % 4) != map->left_view[i % 4])
 				return (0);
-		}
 		else if (i / 4 == 3)
-		{
 			if (right_view_count(map, i % 4) != map->right_view[i % 4])
 				return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -134,9 +167,10 @@ bool	simple_bruteforce(t_map *map, uint8_t pos)
 		map->map[pos].value = 1;
 		while (map->map[pos].value <= map->size)
 		{
-			print_board(map->map, map->size);
 			if (is_solved(map))
 			{
+				print_board(map->map, map->size);
+				printf("board is solved!\n");
 				exit(0);
 			}
 			else

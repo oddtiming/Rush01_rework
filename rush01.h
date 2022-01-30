@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 13:10:32 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 13:58:20 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_map	init_map(t_map *map, char *views);
 
 //CHECKER
 bool	is_solved(t_map *map);
+bool	there_are_duplicates(t_map *map);
 uint8_t	top_view_count(t_map *map, uint8_t pos);
 uint8_t	bottom_view_count(t_map *map, uint8_t pos);
 uint8_t	left_view_count(t_map *map, uint8_t pos);

@@ -33,10 +33,10 @@ void	print_views(uint8_t *views, int map_size)
 	{
 		c = views[i] + '0';
 		write (1, &c, 1);
-		if ( (i + 1) % map_size == 0)	//to adjust for different index
-			write (1, "\n", 1);
-		else
+		if ((i + 1) % map_size)	//to adjust for different index
 			write (1, " ", 1);
+		else
+			write (1, "\n", 1);
 		i++;
 	}
 	return ;
