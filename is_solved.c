@@ -6,14 +6,14 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:55:26 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 17:59:14 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:48:41 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush01.h"
 
 // printf("top view count for x = %d = %d\n", curr_x, view_count);
-uint8_t	top_view_count(t_map *map, uint8_t curr_x)
+t_uf8	top_view_count(t_map *map, t_uf8 curr_x)
 {
 	int	view_count;
 	int	highest;
@@ -37,7 +37,7 @@ uint8_t	top_view_count(t_map *map, uint8_t curr_x)
 }
 
 // printf("bottom view count for x = %d = %d\n", curr_x, view_count);
-uint8_t	bottom_view_count(t_map *map, uint8_t curr_x)
+t_uf8	bottom_view_count(t_map *map, t_uf8 curr_x)
 {
 	int	view_count;
 	int	highest;
@@ -61,7 +61,7 @@ uint8_t	bottom_view_count(t_map *map, uint8_t curr_x)
 }
 
 // printf("left view count for y = %d = %d\n", curr_y, view_count);
-uint8_t	left_view_count(t_map *map, uint8_t curr_y)
+t_uf8	left_view_count(t_map *map, t_uf8 curr_y)
 {
 	int	view_count;
 	int	highest;
@@ -85,7 +85,7 @@ uint8_t	left_view_count(t_map *map, uint8_t curr_y)
 }
 
 // printf("right view count for y = %d = %d\n", curr_y, view_count);
-uint8_t	right_view_count(t_map *map, uint8_t curr_y)
+t_uf8	right_view_count(t_map *map, t_uf8 curr_y)
 {
 	int	view_count;
 	int	highest;

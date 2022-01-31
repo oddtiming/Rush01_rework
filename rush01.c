@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 17:57:10 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 23:43:54 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
  * 
  * @param argc 
  * @param argv		
- * @return uint8_t	:	0 if the args are not valid, map_size otherwise
+ * @return t_uf8	:	0 if the args are not valid, map_size otherwise
  */
-uint8_t	get_map_size(int argc, char *const *argv)
+//need to add inputs_are_valid(argc, argv[1]) 
+						// -->need to not access argv[1] if argc < 2
+t_uf8	get_map_size(int argc, char *const *argv)
 {
-	uint8_t	nb_views;
+	t_uf8	nb_views;
 	char	biggest;
 	int		i;
 
@@ -48,21 +50,45 @@ uint8_t	get_map_size(int argc, char *const *argv)
 }
 
 // print_views(map.views_key, map.size);
-// print_board(map.map, map.size);
 // simple_bruteforce(&map, 0);
+// print_board(map.map, map.size);
 int	main(int argc, char *const *argv)
 {
 	t_map	map;
-	uint8_t	map_size;
+	t_uf8	map_size;
 
 	map_size = get_map_size(argc, argv);
-	map.size = map_size;
-	if (map_size == 0)
+	if (map_size == 0 || init_map(&map, argv[1]))
+	{
 		write(2, "Error\n", sizeof("Error\n"));
-	if (init_map(&map, argv[1]))
-		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
+		return (EXIT_FAILURE);
+	}
+	map.size = map_size;
 	place_known_values(&map);
-	if (solver(&map, 0))
-		exit(1);
-	return (0);
+	// if (solver(&map, 0) == 0)
+	// 	print_board(map.map, map.size);
+	// else
+	// 	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
+/**
+ * @brief ideas:
+ * 	- it's better to separate big functions into subfunction
+ * 	that contain only the necessary elements.
+ * 		
+ * 	- typedef some variables for clarity to replace t_uf8
+ * to determine the next value for a given cell:
+ *	if (!map->map[pos].is_set) {
+	 	//the fct below will assign 0 if it's bigger than size
+ * 		map->map[pos].value = next_possible_value(map->, pos);
+ *	}
+	if (!map->maps[pos].value)
+		return (1);
+ * 		
+ * 
+ * 
+ */
+/**
+ * Tired af, but I started some of the logic for set_net_pos
+ * - [ ] Figure out how to know which direction to iterate
+ * 

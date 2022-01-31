@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 18:09:25 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:48:41 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_sqrt(int nb)
 		return (0);
 }
 
-void	print_views(uint8_t *views, int map_size)
+void	print_views(t_uf8 *views, int map_size)
 {
 	int		i;
 	char	c;
@@ -54,7 +54,7 @@ void	print_views(uint8_t *views, int map_size)
 	return ;
 }
 
-bool	print_board(t_pos *map, uint8_t size)
+bool	print_board(t_pos *map, t_uf8 size)
 {
 	int		i;
 	char	c;

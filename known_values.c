@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:00:35 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 18:02:17 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:48:41 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	place_top(t_map *map)
 {
-	uint8_t	i;
-	uint8_t	j;
+	t_uf8	i;
+	t_uf8	j;
 
 	i = 0;
 	while (i < map->size)
@@ -41,8 +41,8 @@ static void	place_top(t_map *map)
 
 static void	place_bottom(t_map *map)
 {
-	uint8_t	i;
-	uint8_t	j;
+	t_uf8	i;
+	t_uf8	j;
 
 	i = 0;
 	while (i < map->size)
@@ -68,8 +68,8 @@ static void	place_bottom(t_map *map)
 
 static void	place_left(t_map *map)
 {
-	uint8_t	i;
-	uint8_t	j;
+	t_uf8	i;
+	t_uf8	j;
 
 	i = 0;
 	while (i < map->size)
@@ -95,8 +95,8 @@ static void	place_left(t_map *map)
 
 static void	place_right(t_map *map)
 {
-	uint8_t	i;
-	uint8_t	j;
+	t_uf8	i;
+	t_uf8	j;
 
 	i = 0;
 	while (i < map->size)

@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:54:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 18:07:44 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:48:41 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	there_are_duplicates(t_map *map)
 	return (check_cols_for_duplicates(map) | check_rows_for_duplicates(map));
 }
 
-bool	simple_bruteforce(t_map *map, uint8_t pos)
+bool	simple_bruteforce(t_map *map, t_uf8 pos)
 {
 	if (pos < (map->size * map->size - 1))
 	{

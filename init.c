@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:59 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 18:00:17 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:40:00 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ bool	init_map(t_map *map, char *views)
 	i = 0;
 	while (i < map->size * map->size)
 	{
-		map->map[i].x = i % map->size;
-		map->map[i].y = i / map->size;
 		map->map[i].value = 0;
 		map->map[i].is_set = false;
 		i++;
