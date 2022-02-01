@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:55:31 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/01 11:36:37 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:10:44 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,13 @@ bool	solver_recursive(t_pos *board, t_uf8 pos)
 	if (pos == size * size && is_solved((t_map *)(&board))
 		return (print_board((t_map *)(&board), size));
 	board[pos].value = set_next_value(board, pos);
-	while (board[pos].value)
-		return (solver_recursive(board, pos + 1))
-		// return (solver_recursive(board, set_next_pos(board, pos)))
+	while (board[pos].value )
+	{
+		if (pos % size < pos / size) //meaning x > y
+			return (solver_recursive(board, pos + size)) //move right
+		else if (pos != size * size - 1)	//meaning y <= x, but not last_board_pos
+			return (solver_recursive(board, pos + 1))
+	}
 	return (1);
 }
 
