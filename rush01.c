@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 23:43:54 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:35:52 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main(int argc, char *const *argv)
 		write(2, "Error\n", sizeof("Error\n"));
 		return (EXIT_FAILURE);
 	}
+	modify_board(&map);
 	map.size = map_size;
 	place_known_values(&map);
 	// if (solver(&map, 0) == 0)
@@ -92,3 +93,4 @@ int	main(int argc, char *const *argv)
  * Tired af, but I started some of the logic for set_net_pos
  * - [ ] Figure out how to know which direction to iterate
  * 
+ */

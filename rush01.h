@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 23:00:34 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/01 01:18:14 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define VIEWS_MIN 4
 
 typedef uint_fast8_t	t_uf8;
+typedef uint_fast16_t	t_uf16;
 typedef struct s_pos
 {
 	t_uf8	value;
@@ -64,5 +65,6 @@ int		ft_sqrt(int nb);
 bool	is_digit(char c);
 void	print_views(t_uf8 *views, int map_size);
 bool	print_board(t_pos *map, t_uf8 size);
+void	modify_board(t_map *map);
 
 #endif
