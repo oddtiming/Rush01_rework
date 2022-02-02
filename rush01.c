@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/01 19:47:33 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 02:58:17 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
  * @param argv		
  * @return t_uf8	:	0 if the args are not valid, map_size otherwise
  */
-//need to add inputs_are_valid(argc, argv[1]) 
-						// -->need to not access argv[1] if argc < 2
-t_uf8	get_map_size(int argc, char *const *argv)
+uid_t	get_map_size(int argc, char *const *argv)
 {
-	t_uf8	nb_views;
+	uid_t	nb_views;
 	char	biggest;
 	int		i;
 
@@ -44,7 +42,8 @@ t_uf8	get_map_size(int argc, char *const *argv)
 			return (0);
 		i++;
 	}
-	if (nb_views < VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4)
+	if (nb_views < VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4 \
+			|| !is_digit(argv[1][i - 1]))
 		return (0);
 	return (nb_views / 4);
 }
@@ -55,18 +54,42 @@ t_uf8	get_map_size(int argc, char *const *argv)
 int	main(int argc, char *const *argv)
 {
 	t_map	map;
-	t_uf8	map_size;
+	uid_t	i;
 
-	map_size = get_map_size(argc, argv);
-	if (map_size == 0 || init_map(&map, argv[1]))
+	map.size = get_map_size(argc, argv);
+	if (map.size == 0 || init_map(&map, argv[1]))
 	{
 		write(2, "Error\n", sizeof("Error\n"));
 		return (EXIT_FAILURE);
 	}
-	modify_board(&map);
-	map.size = map_size;
-	place_known_values(&map);
-	print_board(map.map, map_size);
+	// print_views(map.views, map.size);
+
+	set_known_values(&map);
+	
+	printf("\n\n--- AFTER SET_KNOWN ---\n\n");
+	print_board(map.board, map.size);
+	 map.board[5].value = 3;
+	 map.board[6].value = 4;
+	 map.board[7].value = 1;
+	 map.board[9].value = 4;
+	map.board[10].value = 1;
+	map.board[11].value = 2;
+	map.board[13].value = 1;
+	map.board[14].value = 2;
+	map.board[15].value = 3;
+	if (is_solved(map.board, map.views, map.size))
+	{
+		printf("\n");
+		print_board(map.board, map.size);
+		printf("solver is broken\n");
+	}
+
+	// if (simple_bruteforce(map.board, map.views, map.size, 0, 0))
+	// {
+	// 	write(2, "map failure\n", sizeof("map failure\n"));
+	// 	return (EXIT_FAILURE);
+	// }	
+
 	// if (solver(&map, 0) == 0)
 	// 	print_board(map.map, map.size);
 	// else

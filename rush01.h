@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/01 01:18:14 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 02:05:46 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,48 +23,45 @@
 
 //DEFINES
 # define VIEWS_MIN 4
+# define NO_SOLUTIONS 1
+# define BAD_SOLUTION 1
 
-typedef uint_fast8_t	t_uf8;
-typedef uint_fast16_t	t_uf16;
 typedef struct s_pos
 {
-	t_uf8	value;
+	uid_t	value;
 	bool	is_set;
 }	t_pos;
 
 typedef struct s_map
 {
-	t_pos	*map;
-	t_uf8	*views_key;
-	t_uf8	*top_view;
-	t_uf8	*bottom_view;
-	t_uf8	*left_view;
-	t_uf8	*right_view;
-	t_uf8	size;
+	t_pos	*board;
+	uid_t	*views;
+	uid_t	size;
 }	t_map;
 
 //INITIALIZATION
-t_uf8	get_map_size(int argc, char *const *argv);
+uid_t	get_map_size(int argc, char *const *argv);
 bool	init_map(t_map *map, char *views);
 
 //CHECKER
-bool	is_solved(t_map *map);
+bool	is_solved(t_pos	*board, uid_t *views, uid_t	size);
 bool	there_are_duplicates(t_map *map);
-t_uf8	top_view_count(t_map *map, t_uf8 pos);
-t_uf8	bottom_view_count(t_map *map, t_uf8 pos);
-t_uf8	left_view_count(t_map *map, t_uf8 pos);
-t_uf8	right_view_count(t_map *map, t_uf8 pos);
+uid_t	top_view_count(t_map *map, uid_t pos);
+uid_t	bottom_view_count(t_map *map, uid_t pos);
+uid_t	left_view_count(t_map *map, uid_t pos);
+uid_t	right_view_count(t_map *map, uid_t pos);
 
 //SOLVING
-void	place_known_values(t_map *map);
-bool	simple_bruteforce(t_map *map, t_uf8 pos);
-bool	solver(t_map *map, t_uf8 pos);
+void	set_known_values(t_map *map);
+bool	simple_bruteforce(t_pos *board, uid_t *views, uid_t size, uid_t pos, uid_t value);
+bool	solver(t_map *map, uid_t pos);
 
 //UTILS
 int		ft_sqrt(int nb);
 bool	is_digit(char c);
-void	print_views(t_uf8 *views, int map_size);
-bool	print_board(t_pos *map, t_uf8 size);
-void	modify_board(t_map *map);
+void	print_views(uid_t *views, int map_size);
+bool	print_board(t_pos *map, uid_t size);
+
+//Need to update modify board integration
 
 #endif

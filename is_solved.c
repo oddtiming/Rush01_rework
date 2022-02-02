@@ -6,26 +6,26 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:55:26 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/01/30 22:48:41 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:11:47 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush01.h"
 
-// printf("top view count for x = %d = %d\n", curr_x, view_count);
-t_uf8	top_view_count(t_map *map, t_uf8 curr_x)
+// pruid_tf("top view count for x = %d = %d\n", curr_x, view_count);
+static uid_t	top_views(t_pos *board, uid_t size, uid_t curr_x)
 {
-	int	view_count;
-	int	highest;
-	int	current_height;
-	int	i;
+	uid_t	view_count;
+	uid_t	highest;
+	uid_t	current_height;
+	uid_t	i;
 
 	i = 0;
 	view_count = 0;
 	highest = 0;
-	while (i < map->size)
+	while (i < size)
 	{
-		current_height = map->map[curr_x + i * map->size].value;
+		current_height = board[curr_x + (i * size)].value;
 		if (current_height > highest)
 		{
 			view_count++;
@@ -36,20 +36,20 @@ t_uf8	top_view_count(t_map *map, t_uf8 curr_x)
 	return (view_count);
 }
 
-// printf("bottom view count for x = %d = %d\n", curr_x, view_count);
-t_uf8	bottom_view_count(t_map *map, t_uf8 curr_x)
+// pruid_tf("bottom view count for x = %d = %d\n", curr_x, view_count);
+static uid_t	bottom_views(t_pos *board, uid_t size, uid_t curr_x)
 {
-	int	view_count;
-	int	highest;
-	int	current_height;
-	int	i;
+	uid_t	view_count;
+	uid_t	highest;
+	uid_t	current_height;
+	uid_t	i;
 
-	i = map->size;
+	i = size;
 	view_count = 0;
 	highest = 0;
 	while (i > 0)
 	{
-		current_height = map->map[(i - 1) * map->size + curr_x].value;
+		current_height = board[curr_x + ((i - 1) * size)].value;
 		if (current_height > highest)
 		{
 			view_count++;
@@ -60,20 +60,20 @@ t_uf8	bottom_view_count(t_map *map, t_uf8 curr_x)
 	return (view_count);
 }
 
-// printf("left view count for y = %d = %d\n", curr_y, view_count);
-t_uf8	left_view_count(t_map *map, t_uf8 curr_y)
+// pruid_tf("left view count for y = %d = %d\n", curr_y, view_count);
+static uid_t	left_views(t_pos *board, uid_t size, uid_t curr_y)
 {
-	int	view_count;
-	int	highest;
-	int	current_height;
-	int	i;
+	uid_t	view_count;
+	uid_t	highest;
+	uid_t	current_height;
+	uid_t	i;
 
 	i = 0;
 	view_count = 0;
 	highest = 0;
-	while (i < map->size)
+	while (i < size)
 	{
-		current_height = map->map[map->size * curr_y + i].value;
+		current_height = board[size * curr_y + i].value;
 		if (current_height > highest)
 		{
 			view_count++;
@@ -84,20 +84,20 @@ t_uf8	left_view_count(t_map *map, t_uf8 curr_y)
 	return (view_count);
 }
 
-// printf("right view count for y = %d = %d\n", curr_y, view_count);
-t_uf8	right_view_count(t_map *map, t_uf8 curr_y)
+// pruid_tf("right view count for y = %d = %d\n", curr_y, view_count);
+static uid_t	right_views(t_pos *board, uid_t size, uid_t curr_y)
 {
-	int	view_count;
-	int	highest;
-	int	current_height;
-	int	i;
+	uid_t	view_count;
+	uid_t	highest;
+	uid_t	current_height;
+	uid_t	i;
 
-	i = map->size;
+	i = size;
 	view_count = 0;
 	highest = 0;
 	while (i > 0)
 	{
-		current_height = map->map[i - 1 + map->size * curr_y].value;
+		current_height = board[i - 1 + (size * curr_y)].value;
 		if (current_height > highest)
 		{
 			view_count++;
@@ -108,20 +108,32 @@ t_uf8	right_view_count(t_map *map, t_uf8 curr_y)
 	return (view_count);
 }
 
-bool	is_solved(t_map *map)
+bool	is_solved(t_pos	*board, uid_t *views, uid_t	size)
 {
-	int	i;
+	uid_t			i;
 
-	if (there_are_duplicates(map))
-		return (0);
+	// printf("\n\n--- ENTERED IS_SOLVED() ---\n\n");
+	// print_board(board, size);
+
 	i = 0;
-	while (i < map->size)
+//LOLLLLLLL I'm an idiot ; Need to reinstate check_for_duplicates
+	if (there_are_duplicates(board, size))
+		return (BAD_SOLUTION);
+	while (i < size)
 	{
-		if (top_view_count(map, i) != map->top_view[i] || \
-			bottom_view_count(map, i) != map->bottom_view[i] || \
-			left_view_count(map, i) != map->left_view[i] || \
-			right_view_count(map, i) != map->right_view[i])
-			return (0);
+		if (top_views(board, size, i) != views[i + (0 * size)]  || \
+			bottom_views(board, size, i) != views[i + (1 * size)]  || \
+			left_views(board, size, i) != views[i + (2 * size)]  || \
+			right_views(board, size, i) != views[i + (3 * size)] )
+			return (BAD_SOLUTION);
+		printf("top_views: %d\n", top_views(board, size, i));
+		printf("views[i + (0 * size): %d\n", views[i + (0 * size)]);
+		printf("bottom_views: %d\n", bottom_views(board, size, i));
+		printf("views[i + (1 * size): %d\n", views[i + (1 * size)]);
+		printf("left_views: %d\n", left_views(board, size, i));
+		printf("views[i + (2 * size): %d\n", views[i + (2 * size)]);
+		printf("right_views: %d\n", right_views(board, size, i));
+		printf("views[i + (3 * size): %d\n", views[i + (3 * size)]);
 		i++;
 	}
 	return (1);
