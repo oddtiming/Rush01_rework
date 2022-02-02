@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:54:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 12:15:10 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:23:39 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	check_cols_for_duplicates(t_pos *board, uid_t size)
 		while (j < size)
 		{
 			k = j;
-			while (++k < map
+			while (++k < size)
 				if (board[i + k * size].value \
 					== board[i + j * size].value)
 					return (1);
@@ -64,8 +64,6 @@ bool	there_are_duplicates(t_pos *board, uid_t size)
 {
 	return (check_cols_for_duplicates(board, size) | check_rows_for_duplicates(board, size));
 }
-
-
 
 bool	simple_bruteforce(t_pos *board, uid_t *views, uid_t size, uid_t pos, uid_t value)
 {

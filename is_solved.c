@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:55:26 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 12:11:47 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:17:32 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,25 +116,24 @@ bool	is_solved(t_pos	*board, uid_t *views, uid_t	size)
 	// print_board(board, size);
 
 	i = 0;
-//LOLLLLLLL I'm an idiot ; Need to reinstate check_for_duplicates
 	if (there_are_duplicates(board, size))
-		return (BAD_SOLUTION);
+		return (IS_NOT_SOLVED);
 	while (i < size)
 	{
 		if (top_views(board, size, i) != views[i + (0 * size)]  || \
 			bottom_views(board, size, i) != views[i + (1 * size)]  || \
 			left_views(board, size, i) != views[i + (2 * size)]  || \
 			right_views(board, size, i) != views[i + (3 * size)] )
-			return (BAD_SOLUTION);
-		printf("top_views: %d\n", top_views(board, size, i));
-		printf("views[i + (0 * size): %d\n", views[i + (0 * size)]);
-		printf("bottom_views: %d\n", bottom_views(board, size, i));
-		printf("views[i + (1 * size): %d\n", views[i + (1 * size)]);
-		printf("left_views: %d\n", left_views(board, size, i));
-		printf("views[i + (2 * size): %d\n", views[i + (2 * size)]);
-		printf("right_views: %d\n", right_views(board, size, i));
-		printf("views[i + (3 * size): %d\n", views[i + (3 * size)]);
+			return (IS_NOT_SOLVED);
+		// printf("top_views: %d\n", top_views(board, size, i));
+		// printf("views[i + (0 * size): %d\n", views[i + (0 * size)]);
+		// printf("bottom_views: %d\n", bottom_views(board, size, i));
+		// printf("views[i + (1 * size): %d\n", views[i + (1 * size)]);
+		// printf("left_views: %d\n", left_views(board, size, i));
+		// printf("views[i + (2 * size): %d\n", views[i + (2 * size)]);
+		// printf("right_views: %d\n", right_views(board, size, i));
+		// printf("views[i + (3 * size): %d\n", views[i + (3 * size)]);
 		i++;
 	}
-	return (1);
+	return (IS_SOLVED);
 }

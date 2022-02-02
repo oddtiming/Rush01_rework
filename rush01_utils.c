@@ -6,33 +6,11 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/01 23:18:43 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:13:52 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush01.h"
-
-int	ft_sqrt(int nb)
-{
-	int	sqrt;
-
-	if (nb <= 0)
-		return (0);
-	if (nb == 1)
-		return (1);
-	sqrt = nb / 2;
-	while (nb / sqrt < sqrt)
-	{
-		if (4 * (nb / sqrt) < sqrt)
-			sqrt /= 2;
-		else
-			sqrt--;
-	}
-	if (sqrt * sqrt == nb)
-		return (sqrt);
-	else
-		return (0);
-}
 
 void	print_views(uid_t *views, int map_size)
 {
@@ -70,7 +48,9 @@ bool	print_board(t_pos *map, uid_t size)
 			write(1, "\n", 1);
 		i++;
 	}
-	return (0);
+	exit (0);
+
+	// return (0);
 }
 
 bool	is_digit(char c)

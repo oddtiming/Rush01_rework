@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 02:05:46 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:21:19 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@
 # define VIEWS_MIN 4
 # define NO_SOLUTIONS 1
 # define BAD_SOLUTION 1
+# define IS_SOLVED 1
+# define IS_NOT_SOLVED 0
+
+uid_t	g_size;
 
 typedef struct s_pos
 {
 	uid_t	value;
+	uid_t	possible_values;
 	bool	is_set;
 }	t_pos;
 
@@ -45,7 +50,7 @@ bool	init_map(t_map *map, char *views);
 
 //CHECKER
 bool	is_solved(t_pos	*board, uid_t *views, uid_t	size);
-bool	there_are_duplicates(t_map *map);
+bool	there_are_duplicates(t_pos *board, uid_t size);
 uid_t	top_view_count(t_map *map, uid_t pos);
 uid_t	bottom_view_count(t_map *map, uid_t pos);
 uid_t	left_view_count(t_map *map, uid_t pos);
@@ -53,7 +58,8 @@ uid_t	right_view_count(t_map *map, uid_t pos);
 
 //SOLVING
 void	set_known_values(t_map *map);
-bool	simple_bruteforce(t_pos *board, uid_t *views, uid_t size, uid_t pos, uid_t value);
+bool	simple_bruteforce(t_pos *board, uid_t *views, uid_t size, uid_t pos, \
+	uid_t value);
 bool	solver(t_map *map, uid_t pos);
 
 //UTILS

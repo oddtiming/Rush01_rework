@@ -6,11 +6,12 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 02:58:17 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:20:45 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush01.h"
+
 
 /**
  * @brief Get the map size object. Will check whether the input is valid
@@ -64,31 +65,21 @@ int	main(int argc, char *const *argv)
 	}
 	// print_views(map.views, map.size);
 
-	set_known_values(&map);
+	// set_known_values(&map);
+	// print_board(map.board, map.size);
 	
-	printf("\n\n--- AFTER SET_KNOWN ---\n\n");
-	print_board(map.board, map.size);
-	 map.board[5].value = 3;
-	 map.board[6].value = 4;
-	 map.board[7].value = 1;
-	 map.board[9].value = 4;
-	map.board[10].value = 1;
-	map.board[11].value = 2;
-	map.board[13].value = 1;
-	map.board[14].value = 2;
-	map.board[15].value = 3;
-	if (is_solved(map.board, map.views, map.size))
-	{
-		printf("\n");
-		print_board(map.board, map.size);
-		printf("solver is broken\n");
-	}
-
-	// if (simple_bruteforce(map.board, map.views, map.size, 0, 0))
+	// if (is_solved(map.board, map.views, map.size))
 	// {
-	// 	write(2, "map failure\n", sizeof("map failure\n"));
-	// 	return (EXIT_FAILURE);
-	// }	
+	// 	printf("\n");
+	// 	print_board(map.board, map.size);
+	// 	printf("solver is broken\n");
+	// }
+
+	if (simple_bruteforce(map.board, map.views, map.size, 0, 0))
+	{
+		write(2, "map failure\n", sizeof("map failure\n"));
+		return (EXIT_FAILURE);
+	}	
 
 	// if (solver(&map, 0) == 0)
 	// 	print_board(map.map, map.size);
