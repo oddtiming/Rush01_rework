@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/01 11:35:52 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/01 19:47:33 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char *const *argv)
 	modify_board(&map);
 	map.size = map_size;
 	place_known_values(&map);
+	print_board(map.map, map_size);
 	// if (solver(&map, 0) == 0)
 	// 	print_board(map.map, map.size);
 	// else
