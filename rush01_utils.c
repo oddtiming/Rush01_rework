@@ -6,24 +6,24 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 17:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:13:52 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:02:55 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush01.h"
 
-void	print_views(uid_t *views, int map_size)
+void	print_views(uid_t *views)
 {
 	int		i;
 	char	c;
 
 	i = 0;
 	write(1, " view\n", sizeof(" view\n"));
-	while (i < map_size * 4)
+	while (i < g_size * 4)
 	{
 		c = views[i] + '0';
 		write (1, &c, 1);
-		if ((i + 1) % map_size)
+		if ((i + 1) % g_size)
 			write (1, " ", 1);
 		else
 			write (1, "\n", 1);
@@ -32,17 +32,17 @@ void	print_views(uid_t *views, int map_size)
 	return ;
 }
 
-bool	print_board(t_pos *map, uid_t size)
+bool	print_board(uid_t *board)
 {
 	int		i;
 	char	c;
 
 	i = 0;
-	while (i < size * size)
+	while (i < g_size * g_size)
 	{
-		c = map[i].value + '0';
+		c = board[i] + '0';
 		write (1, &c, 1);
-		if ((i + 1) % size)
+		if ((i + 1) % g_size)
 			write (1, " ", 1);
 		else
 			write(1, "\n", 1);

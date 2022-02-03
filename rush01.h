@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:21:19 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:02:03 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,44 +30,18 @@
 
 uid_t	g_size;
 
-typedef struct s_pos
-{
-	uid_t	value;
-	uid_t	possible_values;
-	bool	is_set;
-}	t_pos;
-
-typedef struct s_map
-{
-	t_pos	*board;
-	uid_t	*views;
-	uid_t	size;
-}	t_map;
-
 //INITIALIZATION
 uid_t	get_map_size(int argc, char *const *argv);
-bool	init_map(t_map *map, char *views);
 
 //CHECKER
-bool	is_solved(t_pos	*board, uid_t *views, uid_t	size);
-bool	there_are_duplicates(t_pos *board, uid_t size);
-uid_t	top_view_count(t_map *map, uid_t pos);
-uid_t	bottom_view_count(t_map *map, uid_t pos);
-uid_t	left_view_count(t_map *map, uid_t pos);
-uid_t	right_view_count(t_map *map, uid_t pos);
 
 //SOLVING
-void	set_known_values(t_map *map);
-bool	simple_bruteforce(t_pos *board, uid_t *views, uid_t size, uid_t pos, \
-	uid_t value);
-bool	solver(t_map *map, uid_t pos);
+int		solver(uid_t *board, uid_t x, uid_t y);
 
 //UTILS
 int		ft_sqrt(int nb);
 bool	is_digit(char c);
-void	print_views(uid_t *views, int map_size);
-bool	print_board(t_pos *map, uid_t size);
-
-//Need to update modify board integration
+void	print_views(uid_t *views);
+bool	print_board(uid_t *board);
 
 #endif

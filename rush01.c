@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rush01.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:20:45 by iyahoui-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "rush01.h"
 
 
@@ -23,28 +11,25 @@
 uid_t	get_map_size(int argc, char *const *argv)
 {
 	uid_t	nb_views;
-	char	biggest;
+	char	biggest_number;
 	int		i;
 
-	biggest = 0;
-	if (argc != 2 || !is_digit(*(argv[1])))
+	if (argc != 2 || (!is_digit(*argv[1]) && *argv[1]))
 		return (0);
 	i = 1;
 	nb_views = 1;
-	while (argv[1][i])
+	biggest_number = 0;
+	while (argv[1][i - 1] && argv[1][i])
 	{
-		if (is_digit(argv[1][i]) && argv[1][i - 1] == ' ')
-		{
-			if (argv[1][i] > biggest)
-				biggest = argv[1][i];
-			nb_views += 1;
-		}
-		else if (!(argv[1][i] == ' ' && is_digit(argv[1][i - 1])))
+		if (!(argv[1][i] == ' ' && is_digit(argv[1][i - 1])))
 			return (0);
-		i++;
+		if (argv[1][i] > biggest_number)
+			biggest_number = argv[1][i];
+		nb_views += 1;
+		i += 2;
 	}
-	if (nb_views < VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4 \
-			|| !is_digit(argv[1][i - 1]))
+	if (!is_digit(argv[1][i - 1]) || nb_views < VIEWS_MIN || \
+			nb_views % 4 || biggest_number - '0' > nb_views / 4)
 		return (0);
 	return (nb_views / 4);
 }
@@ -54,37 +39,34 @@ uid_t	get_map_size(int argc, char *const *argv)
 // print_board(map.map, map.size);
 int	main(int argc, char *const *argv)
 {
-	t_map	map;
-	uid_t	i;
+	uid_t	x;
+	uid_t	y;
+	uid_t	*board;
+	char	*solution;
 
-	map.size = get_map_size(argc, argv);
-	if (map.size == 0 || init_map(&map, argv[1]))
+	g_size = get_map_size(argc, argv);
+	if (g_size == 0)
 	{
 		write(2, "Error\n", sizeof("Error\n"));
 		return (EXIT_FAILURE);
 	}
-	// print_views(map.views, map.size);
-
-	// set_known_values(&map);
-	// print_board(map.board, map.size);
-	
-	// if (is_solved(map.board, map.views, map.size))
-	// {
-	// 	printf("\n");
-	// 	print_board(map.board, map.size);
-	// 	printf("solver is broken\n");
-	// }
-
-	if (simple_bruteforce(map.board, map.views, map.size, 0, 0))
+	board = malloc(g_size * g_size * sizeof(uid_t));
+	x = 0;
+	while (x < g_size * g_size)
+		board[x++] = 0;
+	x = 0;
+	while (x < g_size * g_size)
 	{
-		write(2, "map failure\n", sizeof("map failure\n"));
-		return (EXIT_FAILURE);
-	}	
-
-	// if (solver(&map, 0) == 0)
-	// 	print_board(map.map, map.size);
-	// else
+		printf("board[%d] = [%d]\n", x, board[x]);
+		x++;
+	}
+	x = 0;
+	y = 0;
+	// if (solver(board, size, x, y))
+	// {
+	// 	write(2, "map failure\n", sizeof("map failure\n"));
 	// 	return (EXIT_FAILURE);
+	// }
 	return (EXIT_SUCCESS);
 }
 /**
