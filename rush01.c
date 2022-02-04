@@ -4,9 +4,9 @@
 /**
  * @brief Get the map size object. Will check whether the input is valid
  * 
- * @param argc 
- * @param argv		
- * @return t_uf8	:	0 if the args are not valid, map_size otherwise
+ * @param argc 	to check that argc == 2
+ * @param argv	to check that input is properly parsed
+ * @return int	:	0 if the args are not valid, map_size otherwise
  */
 int	get_map_size(int argc, char *const *argv)
 {
@@ -28,7 +28,7 @@ int	get_map_size(int argc, char *const *argv)
 		nb_views += 1;
 		i += 2;
 	}
-	if (!is_digit(argv[1][i - 1]) || nb_views < VIEWS_MIN || \
+	if (!is_digit(argv[1][i - 1]) || nb_views < _VIEWS_MIN || \
 			nb_views % 4 || biggest_number - '0' > nb_views / 4)
 		return (0);
 	return (nb_views / 4);
@@ -53,16 +53,11 @@ int	main(int argc, char *const *argv)
 		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
 		return (EXIT_FAILURE);
 	}
-	if (solver_simple(board, 0, 0) == NO_SOLUTIONS)
+	if (solver_simple(board, 0, 0) == BAD_SOLUTION)
 	{
 	 	write(2, "map failure\n", sizeof("map failure\n"));
 	 	return (EXIT_FAILURE);
 	}
-	// if (solver(board, 0, 0) == NO_SOLUTIONS)
-	// {
-	//  	write(2, "map failure\n", sizeof("map failure\n"));
-	//  	return (EXIT_FAILURE);
-	// }
 	else
 		print_board(board);
 	free (board);

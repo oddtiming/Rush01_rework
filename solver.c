@@ -112,6 +112,75 @@ bool	is_duplicate(int *board, int x, int y)
 	return (false);
 }
 
+int	check_col(int *views, int *board, int x, int y)
+{
+	int	highest;
+	int	nb_views;
+
+	highest = board[x + y * g_size];
+	nb_views = 1;
+	while (--y >= 0)
+		if (board[x + y * g_size] > highest && nb_views++)
+			highest = board[x + y * g_size];
+	if (nb_views != views[1 * g_size + x])	//View for col-y-up
+		return (VIEWS_BAD);
+	highest = board[x + y * g_size];
+	nb_views = 1;
+	while (++y <= g_size)
+		if (board[x + y * g_size] > highest && nb_views++)
+			highest = board[x + y * g_size];
+	if (nb_views != views[0 * g_size + x])	//View for col-y-down
+		return (VIEWS_BAD);
+	return (VIEWS_OK);
+}
+
+int	check_row(int *views, int *board, int x, int y)
+{
+	int	highest;
+	int	nb_views;
+
+	highest = board[x + y * g_size];
+	nb_views = 1;
+	while (--x >= 0)
+		if (board[x + y * g_size] > highest && nb_views++)
+			highest = board[x + y * g_size];
+	if (nb_views != views[3 * g_size + x])	//View for row-x-right
+		return (VIEWS_BAD);
+	highest = board[x + y * g_size];
+	nb_views = 1;
+	while (++x <= g_size)
+		if (board[x + y * g_size] > highest && nb_views++)
+			highest = board[x + y * g_size];
+	if (nb_views != views[2 * g_size + x])	//View for row-x-left
+		return (VIEWS_BAD);
+	return (VIEWS_OK);
+}
+
+int	check_views(int *views, int *board, int x, int y)
+{
+	if (check_row(views, board, x, y) || check_col(views, board, x, y))
+		return (VIEWS_BAD);
+	return (VIEWS_OK);
+
+}
+
+int	L_search(int *views, int *board, int x, int y)
+{
+	int	status;
+
+	if (x == g_size - 1 && y == g_size - 1)
+		return (IS_SOLVED);
+	else if ((x == y || x > y) && x != g_size - 1)	//going right in row
+		status = solve_simpler(views, board, x + 1, y);
+	else if (x == y || x > y)	//finished row, go down col
+		status = solver_simple(views, board, y + 1, y);
+	else if (y == g_size - 1)	//finished col, go center of next L-search
+		status = solver_simple(views, board, x + 1, x + 1);
+	else	//going down in col
+		status = solver_simple(views, board, x, y + 1);
+	return (status);
+}
+
 int	solver_simple(int *views, int *board, int x, int y)
 {
 	int	status;
@@ -119,23 +188,14 @@ int	solver_simple(int *views, int *board, int x, int y)
 	board[x + y * g_size] = 0;
 	while (++board[x + y * g_size] <= g_size)
 	{
-		if (((x == g_size - 1 || y == g_size - 1) && 
-			check_views(views, board, x, y)) && !is_duplicate(board, x, y)) //NEED TO CODE check_views()
-			break ;
-		if (board[x + y * g_size] > g_size)
-			return (BAD_SOLUTION);
-		else if (x == g_size - 1 && y == g_size - 1)
-			return (IS_SOLVED);
-		else if ((x == y || x > y) && x != g_size - 1)	//going right in row
-			status = solver(views, board, x + 1, y);
-		else if (x == y || x > y)	//finished row, go down col
-			status = solver(views, board, y + 1, y);
-		else if (y == g_size - 1)	//finished col, go center of next L-search
-			status = solver(views, board, x + 1, x + 1);
-		else	//going down in col
-			status = solver(views, board, x, y + 1);
-		if (status == IS_SOLVED)
-			return (IS_SOLVED);
+		if (is_duplicate(board, x, y))
+			continue ;				
+		//only check at end of row or col, I think it's more efficient
+		else if (x == g_size - 1 || y == g_size - 1)	
+			if (check_views(views, board, x, y) == VIEWS_BAD)
+				continue ;
+		else if (L_search(views, board, x, y) == IS_SOLVED)
+				return (IS_SOLVED);
 	}
 	return (BAD_SOLUTION);
 }
