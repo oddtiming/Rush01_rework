@@ -8,7 +8,7 @@
  * @param argv	to check that input is properly parsed
  * @return int	:	0 if the args are not valid, map_size otherwise
  */
-int	get_map_size(int argc, char *const *argv)
+int	get_map_size(int argc, char *argv[])
 {
 	int	nb_views;
 	char	biggest_number;
@@ -37,23 +37,33 @@ int	get_map_size(int argc, char *const *argv)
 // print_views(map.views_key, map.size);
 // simple_bruteforce(&map, 0);
 // print_board(map.map, map.size);
-int	main(int argc, char *const *argv)
+int	main(int argc, char *argv[])
 {
 	int	*board;
 	int	*views;
 
 	g_size = get_map_size(argc, argv);
-	if (g_size == 0)
+	if (g_size <= 0)
 	{
 		write(2, "Error\n", sizeof("Error\n"));
 		return (EXIT_FAILURE);
 	}
-	if (init(board, views, argv[1]))
+	// if (init(&board, &views, argv[1]))
+	board = malloc(g_size * g_size * sizeof(int));
+	if (!board)
 	{
 		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
 		return (EXIT_FAILURE);
 	}
-	if (solver_simple(board, 0, 0) == BAD_SOLUTION)
+	views = malloc(4 * g_size * sizeof(int));
+	if (!views)
+	{
+		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
+		return (EXIT_FAILURE);
+	}
+	views = init(views, argv[1]);
+	// print_board(board);
+	if (solver_simple(views, board, 0, 0) == BAD_SOLUTION)
 	{
 	 	write(2, "map failure\n", sizeof("map failure\n"));
 	 	return (EXIT_FAILURE);

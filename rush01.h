@@ -6,7 +6,7 @@
 /*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/04 03:01:38 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/02/04 11:10:45 by iyahoui-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,22 @@
 int	g_size;
 
 //INITIALIZATION
-int		get_map_size(int argc, char *const *argv);
-int		init(int *board, int *views, char *const *argv);
+int		get_map_size(int argc, char *argv[]);
+int		*init(int *views, char *views_string);
 int		*init_views(int *views);
-
+int		init_possible_values_board(int *possible_values_board);
 
 //CHECKER
 int		*get_views(int *views);
 bool	is_duplicate(int *board, int x, int y);
 
 //SOLVING
-int		solver(int *board, int x, int y);
 int		solver_simple(int *views, int *board, int x, int y);
 int		L_search(int *views, int *board, int x, int y);
+int		solver(int *board, int x, int y);
+int		set_next_value(int *board, int x, int y);
+void	set_possible_values(int *board, int *possible_values, int x, int y);
+
 
 
 //UTILS
@@ -53,7 +56,8 @@ int		ft_sqrt(int nb);
 bool	is_digit(char c);
 void	print_views(int *views);
 bool	print_board(int *board);
-int		exp(int base, int e)
-
+int		ft_exp(int base, int e);
+int		smallest_bit(int nb);
+int		fill_n_bits(int value);
 
 #endif
