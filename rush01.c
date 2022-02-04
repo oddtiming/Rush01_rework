@@ -8,13 +8,13 @@
  * @param argv		
  * @return t_uf8	:	0 if the args are not valid, map_size otherwise
  */
-uid_t	get_map_size(int argc, char *const *argv)
+int	get_map_size(int argc, char *const *argv)
 {
-	uid_t	nb_views;
+	int	nb_views;
 	char	biggest_number;
 	int		i;
 
-	if (argc != 2 || (!is_digit(*argv[1]) && *argv[1]))
+	if (argc != 2 || (*argv[1] && !is_digit(*argv[1])))
 		return (0);
 	i = 1;
 	nb_views = 1;
@@ -39,10 +39,8 @@ uid_t	get_map_size(int argc, char *const *argv)
 // print_board(map.map, map.size);
 int	main(int argc, char *const *argv)
 {
-	uid_t	x;
-	uid_t	y;
-	uid_t	*board;
-	char	*solution;
+	int	*board;
+	int	*views;
 
 	g_size = get_map_size(argc, argv);
 	if (g_size == 0)
@@ -50,23 +48,26 @@ int	main(int argc, char *const *argv)
 		write(2, "Error\n", sizeof("Error\n"));
 		return (EXIT_FAILURE);
 	}
-	board = malloc(g_size * g_size * sizeof(uid_t));
-	x = 0;
-	while (x < g_size * g_size)
-		board[x++] = 0;
-	x = 0;
-	while (x < g_size * g_size)
+	if (init(board, views, argv[1]))
 	{
-		printf("board[%d] = [%d]\n", x, board[x]);
-		x++;
+		write(2, "Malloc Error\n", sizeof("Malloc Error\n"));
+		return (EXIT_FAILURE);
 	}
-	x = 0;
-	y = 0;
-	// if (solver(board, size, x, y))
+	if (solver_simple(board, 0, 0) == NO_SOLUTIONS)
+	{
+	 	write(2, "map failure\n", sizeof("map failure\n"));
+	 	return (EXIT_FAILURE);
+	}
+	// if (solver(board, 0, 0) == NO_SOLUTIONS)
 	// {
-	// 	write(2, "map failure\n", sizeof("map failure\n"));
-	// 	return (EXIT_FAILURE);
+	//  	write(2, "map failure\n", sizeof("map failure\n"));
+	//  	return (EXIT_FAILURE);
 	// }
+	else
+		print_board(board);
+	free (board);
+	free(views);
+	set_next_value(0, FREE_BOARD, 0);
 	return (EXIT_SUCCESS);
 }
 /**
