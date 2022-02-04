@@ -55,7 +55,7 @@ int	set_next_value(int *board, int x, int y)
 	next_value = smallest_bit(possible_values[x + y * g_size]);
 	while (next_value)
 	{
-		if (views_are_valid(board, x, y))		//GOTTA CODE THIS
+		if (views_are_valid(board, x, y)) //NEED TO CODE PARTIAL check_col
 			break ;
 		possible_values[x + y * g_size] &= ~(1 << next_value);
 		next_value = smallest_bit(possible_values[x + y * g_size]);
@@ -161,7 +161,6 @@ int	check_views(int *views, int *board, int x, int y)
 	if (check_row(views, board, x, y) || check_col(views, board, x, y))
 		return (VIEWS_BAD);
 	return (VIEWS_OK);
-
 }
 
 int	L_search(int *views, int *board, int x, int y)
