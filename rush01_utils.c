@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rush01_utils.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/30 17:57:48 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/04 11:02:32 by iyahoui-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "rush01.h"
 
 void	print_views(int *views)
@@ -32,7 +20,7 @@ void	print_views(int *views)
 	return ;
 }
 
-bool	print_board(int *board)
+int	print_board(int *board)
 {
 	int		i;
 	char	c;
@@ -95,4 +83,10 @@ int	ft_exp(int base, int e)
 	else if (e == 0 || base == 1)
 		return (1);
 	return (base * ft_exp(base, e - 1));
+}
+
+void	ft_putchar(int c)
+{
+	write(1, &c, 1);
+	return ;
 }

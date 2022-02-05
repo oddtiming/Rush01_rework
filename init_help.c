@@ -4,20 +4,14 @@ int	*get_views(int *views)
 {
 	static int	*static_views;
 
-	if (!static_views)
+	if (!static_views && views)
 		static_views = views;
 	else if (views)
 		views = static_views;
 	return (views);
 }
 
-int	*init_views(int *views)
-{
-	get_views(views);
-	return (views);
-}
-
-int	*init(int *views, char *views_string)
+int	*parse_views(int *views, char *views_string)
 {
 	int		i;
 
@@ -30,5 +24,11 @@ int	*init(int *views, char *views_string)
 		i++;
 	}
 	init_views(views);
+	return (views);
+}
+
+int	*init_views(int *views)
+{
+	get_views(views);
 	return (views);
 }

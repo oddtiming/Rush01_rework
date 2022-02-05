@@ -86,7 +86,7 @@ int	solver(int *board, int x, int y)
 		if (status == IS_SOLVED)
 			return (IS_SOLVED);
 	}
-	return (BAD_SOLUTION);
+	return (UNSOLVABLE_BOARD);
 }
 	//for solver
 	// if ((x + 1) * (y + 1) == g_size * g_size && board[x + y * g_size] != 0)
@@ -158,8 +158,11 @@ int	check_row(int *views, int *board, int x, int y)
 	return (VIEWS_OK);
 }
 
-int	check_views(int *views, int *board, int x, int y)
+int	check_views(int *board, int x, int y)
 {
+	int *views;
+
+	views = get_views(views);
 	if (x == g_size - 1 && check_row(views, board, x, y) == VIEWS_BAD)
 		return (VIEWS_BAD);
 	if (y == g_size - 1 && check_col(views, board, x, y) == VIEWS_BAD)
@@ -167,7 +170,7 @@ int	check_views(int *views, int *board, int x, int y)
 	return (VIEWS_OK);
 }
 
-int	L_search(int *views, int *board, int x, int y)
+int	L_search_expanded(int *board, int x, int y)
 {
 	int	next_x;
 	int	next_y;
@@ -175,70 +178,103 @@ int	L_search(int *views, int *board, int x, int y)
 	next_x = x;
 	next_y = y;
 	if (x == g_size - 1 && y == g_size - 1)
-	{
-		// print_board(board);
 		return (IS_SOLVED);
-	}
-	else if (x == y || x > y)	//go in row
+	else if ((x == y || x > y) && x != g_size - 1)	//going right in row
+		next_x++;
+	else if (x == y || x > y)	//finished row, go to col
 	{
-		if (x != g_size - 1)	//go right in row 
-			next_x = x + 1;
-		else					//finished row, go down col
-		{
-			next_x = y;
-			next_y = y + 1;
-		}
+		next_x = y;
+		next_y++;
 	}
-	else						//else go in col 
+	else if (y == g_size - 1)	//finished col, go to center of next L-search
 	{
-		if (y != g_size - 1 )	//go down in col
-			next_y = y + 1;
-		else 					//finished row, go center of next L-search
-		{
-			next_x = x + 1;
-			next_y = x + 1;
-		}
+		next_y = x + 1;
+		next_x++;
 	}
-	if (solver_simple(views, board, next_x, next_y) == IS_SOLVED)
+	else	//going down in col
+		next_y++;
+	if (solver_simple(board, next_x, next_y) == IS_SOLVED)
 		return (IS_SOLVED);
-	return (BAD_SOLUTION);
+	return (UNSOLVABLE_BOARD);
 }
 
-int	L_search_compact(int *views, int *board, int x, int y)
+int	L_search_cleaner(int *board, int x, int y)
+{
+	int	next_x;
+	int	next_y;
+
+	next_x = x;
+	next_y = y;
+	if (x == g_size - 1 && y == g_size - 1)
+		return (IS_SOLVED);
+	else if ((x == y || x > y) && x == g_size - 1)	//finished row, go to col
+		next_x = y;
+	else if ((x == y || x > y) || y == g_size - 1)	//going right in row
+		next_x++;
+	if (y > x && y == g_size - 1)	//finished col, go to center of next L-search
+		next_y = x + 1;
+	else if (y > x || x == g_size - 1)	//going down in col
+		next_y++;
+	if (solver_simple(board, next_x, next_y) == IS_SOLVED)
+		return (IS_SOLVED);
+	return (UNSOLVABLE_BOARD);
+}
+
+int	L_search_compact(int *board, int x, int y)
 {
 	int	status;
 
 	if (x == g_size - 1 && y == g_size - 1)
 		return (IS_SOLVED);
 	else if ((x == y || x > y) && x != g_size - 1)	//going right in row
-		status = solver_simple(views, board, x + 1, y);
-	else if (x == y || x > y)	//finished row, go down col
-		status = solver_simple(views, board, y, y + 1);
-	else if (y == g_size - 1)	//finished col, go center of next L-search
-		status = solver_simple(views, board, x + 1, x + 1);
+		status = solver_simple(board, x + 1, y);
+	else if (x == y || x > y)	//finished row, go to col
+		status = solver_simple(board, y, y + 1);
+	else if (y == g_size - 1)	//finished col, go to center of next L-search
+		status = solver_simple(board, x + 1, x + 1);
 	else	//going down in col
-		status = solver_simple(views, board, x, y + 1);
+		status = solver_simple(board, x, y + 1);
 	return (status);
 }
 
-int	solver_simple(int *views, int *board, int x, int y)
+int	solver_simple(int *board, int x, int y)
 {
-	int	value;
-	
-	value = 0;
-	while (++value <= g_size)
+	board[x + y * g_size] = 0;
+	while (++board[x + y * g_size] <= g_size)
 	{
-		board[x + y * g_size] = value;
 		if (is_duplicate(board, x, y))
 			continue ;				
 		else if (x == g_size - 1 || y == g_size - 1)
 		{
 			//only check at end of row or col, I think it's more efficient
-			if (check_views(views, board, x, y) == VIEWS_BAD)
+			if (check_views(board, x, y) == VIEWS_BAD)
 				continue ;
 		}
-		if (L_search_compact(views, board, x, y) == IS_SOLVED)
+		if (L_search_compact(board, x, y) == IS_SOLVED)
 				return (IS_SOLVED);
 	}
-	return (BAD_SOLUTION);
+	return (UNSOLVABLE_BOARD);
+}
+
+int	solver_setknown(int *board, int x, int y)
+{
+	int		value;
+	bool	is_set;
+	
+	value = 0;
+	is_set = false;
+	if (board[x + y * g_size] && !(y == g_size - 1 && x == g_size - 1))
+		return (L_search_compact(board, x, y));
+	while (++value <= g_size)
+	{
+		board[x + y * g_size] = value;
+		if (is_duplicate(board, x, y))
+			continue ;				
+		else if ((x == g_size - 1 || y == g_size - 1) && \
+				check_views(board, x, y) == VIEWS_BAD)
+			continue ;
+		if (L_search_compact(board, x, y) == IS_SOLVED)
+				return (IS_SOLVED);
+	}
+	return (UNSOLVABLE_BOARD);
 }
