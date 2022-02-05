@@ -62,15 +62,15 @@ int	main(int argc, char *argv[])
 	int i = 0;
 	while (i < g_size * g_size)
 	{
-		board[i] = 0xff << 1;
+		board[i] = 0xff << i % 9;
 		i++;
 	}
-	board[0] = 0xf << 1;
-	board[0] &= ~(1 << 2);
-	board[0] &= ~(1 << 3);
-	board[1] &= (1 << 2);
-	board[2] &= (1 << 3);
-	board[3] &= (1 << 4);
+	// board[0] = 0xf << 1;
+	// board[0] &= ~(1 << 2);
+	// board[0] &= ~(1 << 3);
+	// board[1] &= (1 << 2);
+	// board[2] &= (1 << 3);
+	// board[3] &= (1 << 4);
 	int *board_dimensions = calc_box_dimensions();
 	printf("For g_size == %d, box dimensions are :\n", g_size);
 	printf("width: %d\n", board_dimensions[0]);

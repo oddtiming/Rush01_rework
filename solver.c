@@ -237,6 +237,20 @@ int	L_search_compact(int *board, int x, int y)
 	return (status);
 }
 
+
+// |---------> |++value <= size?)| --No--> return (BAD_SOLN)
+// |                |           ^
+// |               Yes           \
+// |                v             \
+// |----Yes---|is duplicate?|      \
+// |                |               \
+// |               No                \
+// |                v                 \
+// |        |end of row or col?|--No-->try_next_pos
+// |                |                    ^
+// |               Yes                  No
+// |                v                    |
+// |----No-----|VIEWS_OK?|----Yes-->|is last_pos?|--Yes--> return (IS_SOLVED)
 int	solver_simple(int *board, int x, int y)
 {
 	board[x + y * g_size] = 0;

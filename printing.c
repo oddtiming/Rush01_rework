@@ -9,7 +9,7 @@ static void	print_body(int *views, int *board, int *dimensions, int line_pos)
 	i = 0;
 	while (i < dimensions[1])
 	{
-		if (i == dimensions[1] / 2 - 1 || dimensions[1] == 1)
+		if (i == (dimensions[1] - 1) / 2)
 			ft_putchar(views[line_pos + (2 * g_size)] + '0');
 		else 
 			write(1, " ", 1);
@@ -31,7 +31,7 @@ static void	print_body(int *views, int *board, int *dimensions, int line_pos)
 			j++;
 		}
 		write(1, "|", 1);
-		if (i == dimensions[1] / 2 - 1 || dimensions[1] == 1)
+		if (i == (dimensions[1] - 1) / 2)
 			ft_putchar(views[line_pos + (3 * g_size)] + '0');
 		else 
 			write(1, " ", 1);
