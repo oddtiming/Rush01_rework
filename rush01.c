@@ -53,37 +53,42 @@ int	main(int argc, char *argv[])
 	board = malloc(g_size * g_size * sizeof(int));
 	if (!board)
 		return (write(2, "Malloc Error\n", sizeof("Malloc Error\n")));
+
+	for (int i = 0; i < g_size * g_size; i++)
+		board[i] = 0;
+
 	views = malloc(4 * g_size * sizeof(int));
 	if (!views)
 		return (write(2, "Malloc Error\n", sizeof("Malloc Error\n")));
 	
 	views = parse_views(views, argv[1]);
 
-	int i = 0;
-	while (i < g_size * g_size)
-	{
-		board[i] = 0xff << i % 9;
-		i++;
-	}
+	// int i = 0;
+	// while (i < g_size * g_size)
+	// {
+	// 	board[i] = 0xff << i % 9;
+	// 	i++;
+	// }
 	// board[0] = 0xf << 1;
 	// board[0] &= ~(1 << 2);
 	// board[0] &= ~(1 << 3);
 	// board[1] &= (1 << 2);
 	// board[2] &= (1 << 3);
 	// board[3] &= (1 << 4);
-	int *board_dimensions = calc_box_dimensions();
-	printf("For g_size == %d, box dimensions are :\n", g_size);
-	printf("width: %d\n", board_dimensions[0]);
-	printf("height: %d\n", board_dimensions[1]);
-	print_possible_values(board);
-	free (board_dimensions);
+	// int *board_dimensions = calc_box_dimensions();
+	// printf("For g_size == %d, box dimensions are :\n", g_size);
+	// printf("width: %d\n", board_dimensions[0]);
+	// printf("height: %d\n", board_dimensions[1]);
+	// board[2] = 1 << 2 | 1 << 1;
+	// print_possible_values(board);
+	// free (board_dimensions);
 
-	// set_known_values(board);
-
-	// if (solver_setknown(board, 0, 0) == UNSOLVABLE_BOARD)
-	//  	return (write(2, "Unsolvable\n", sizeof("Unsolvable\n")));
-	// else
-	// 	print_board(board);
+	set_known_values(board);
+	
+	if (solver_setknown(board, 0, 0) == UNSOLVABLE_BOARD)
+	 	return (write(2, "Unsolvable\n", sizeof("Unsolvable\n")));
+	else
+		print_board(board);
 	free (board);
 	free(views);
 	set_next_value(0, FREE_BOARD, 0);

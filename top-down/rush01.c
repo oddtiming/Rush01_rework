@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rush01.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: ismaelyahyaouiracine <ismaelyahyaouirac    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:22:01 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/04 01:16:40 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/09/25 15:13:29 by ismaelyahya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ uid_t	get_map_size(int argc, char *const *argv)
 			return (0);
 		i++;
 	}
-	if (nb_views < _VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4 \
+	if (nb_views < VIEWS_MIN || nb_views % 4 || biggest - '0' > nb_views / 4 \
 			|| !is_digit(argv[1][i - 1]))
 		return (0);
 	return (nb_views / 4);
@@ -65,7 +65,7 @@ int	main(int argc, char *const *argv)
 	}
 	// print_views(map.views, map.size);
 
-	// set_known_values(&map);
+	set_known_values(&map);
 	// print_board(map.board, map.size);
 	
 	// if (is_solved(map.board, map.views, map.size))

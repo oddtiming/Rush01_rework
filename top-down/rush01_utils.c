@@ -63,10 +63,10 @@ int	smallest_bit(int nb)
 	int i;
 
 	//the second condition is an extra protection in case I set 1 << 0 by mistake
-	if (!nb || nb & 0x1)
+	if (!nb || nb >> 1)
 		return (0);
 	i = 1;
-	while (((1 << i) & nb) == 0 && i <= g_size)
+	while (1 >> i != 0x1)
 		i++;
 	return (i);
 }

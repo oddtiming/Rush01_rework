@@ -7,7 +7,6 @@ int	init_possible_values_board(int *possible_values_board)
 	possible_values_board = malloc(g_size * g_size * sizeof(int));
 	if (!possible_values_board)
 	{
-		possible_values_board = NULL;
 		return (MALLOC_OOPSIE);
 	}
 	i = 0;
@@ -19,20 +18,46 @@ int	init_possible_values_board(int *possible_values_board)
 	return (0);
 }
 
+void	remove_possible_values(int *possible_values, int x, int y, int bit_mask)
+{
+	static int	*views;
+	int			diff;
+
+	if (!views)
+		views = get_views(NULL);
+
+	diff = views[x + 0 * g_size] - y;
+	if (diff > 0) // Remove values for top views
+		possible_values[x + y * g_size] &= (bit_mask >> (g_size - diff));
+	diff = views[x + 1 * g_size] - (g_size - 1 - y);
+	if (diff > 0) // Remove values for top views
+		possible_values[x + y * g_size] &= (bit_mask >> (g_size - diff));
+	diff = views[y + 2 * g_size] - x;
+	if (diff > 0) // Remove values for top views
+		possible_values[x + y * g_size] &= (bit_mask >> (g_size - diff));
+	diff = views[y + 3 * g_size] - (g_size - 1 - x);
+	if (diff > 0) // Remove values for top views
+		possible_values[x + y * g_size] &= (bit_mask >> (g_size - diff));
+}
+
 //removes duplicates
 void	set_possible_values(int *board, int *possible_values, int x, int y)
 {
-	int	at_x;
-	int	at_y;
+	static int	bit_mask;
+	int			at_x;
+	int			at_y;
 
+	if (!bit_mask)
+		bit_mask = ((ft_exp(2, g_size) - 1) << 1);
 	at_x = x;
 	at_y = y;
-	if (possible_values[x + y * g_size] == 0)
-		possible_values[x + y * g_size] = (ft_exp(2, g_size) - 1) << 1;
+	possible_values[x + y * g_size] = bit_mask;
 	while (--at_x >= 0)
 		possible_values[x + y * g_size] &= ~(1 << board[at_x + y * g_size]);
 	while (--at_y >= 0)
-		possible_values[x + y * g_size] &= ~(1 << board[x + at_y * g_size]);
+		possible_values[x + y * g_size] &= ~(1 << board[x + at_y * g_size]);	
+
+	remove_possible_values(possible_values, x, y, bit_mask);
 	return ;
 }
 
@@ -42,24 +67,29 @@ int	set_next_value(int *board, int x, int y)
 	int			next_value;
 	
 	if (!possible_values)
-		if (init_possible_values_board(possible_values) == MALLOC_OOPSIE)
+	{
+		possible_values = malloc(g_size * g_size * sizeof(int));
+		if (!possible_values)
 			return (MALLOC_OOPSIE);
+	}
 	if (x == FREE_BOARD || y == FREE_BOARD)
 	{
 		free(possible_values);
 		possible_values = NULL;
 		return (0);
 	}
-	if (!possible_values[x + y * g_size])
+	// if (!possible_values[x + y * g_size])
+	if (!board[x + y * g_size])
 		set_possible_values(board, possible_values, x, y);
+	else
+		possible_values[x + y * g_size] &= ~(1 << board[x + y * g_size]);
 	next_value = smallest_bit(possible_values[x + y * g_size]);
-	while (next_value)
-	{
-		// if (views_are_valid(board, x, y)) //NEED TO CODE PARTIAL check_col
-		// 	break ;
-		possible_values[x + y * g_size] &= ~(1 << next_value);
-		next_value = smallest_bit(possible_values[x + y * g_size]);
-	}
+	// if (!next_value)
+	// {
+	// 	// if (views_are_valid(board, x, y)) //NEED TO CODE PARTIAL check_col
+	// 	// 	break ;
+	// 	next_value = smallest_bit(possible_values[x + y * g_size]);
+	// }
 	board[x + y * g_size] = next_value;
 	return (board[x + y * g_size]);
 }
@@ -237,12 +267,13 @@ int	L_search_compact(int *board, int x, int y)
 	return (status);
 }
 
-
-// |---------> |++value <= size?)| --No--> return (BAD_SOLN)
+// |--------<---- Program start
+// v
+// |--->-----> |++value <= size?| --No--> return (BAD_SOLN)
 // |                |           ^
-// |               Yes           \
+// ^               Yes           \
 // |                v             \
-// |----Yes---|is duplicate?|      \
+// |-<--Yes---|is duplicate?|      \
 // |                |               \
 // |               No                \
 // |                v                 \
@@ -250,12 +281,14 @@ int	L_search_compact(int *board, int x, int y)
 // |                |                    ^
 // |               Yes                  No
 // |                v                    |
-// |----No-----|VIEWS_OK?|----Yes-->|is last_pos?|--Yes--> return (IS_SOLVED)
+// |-<--No-----|VIEWS_OK?|-->-Yes-->|is last_pos?|--Yes--> return (IS_SOLVED)
 int	solver_simple(int *board, int x, int y)
 {
 	board[x + y * g_size] = 0;
 	while (++board[x + y * g_size] <= g_size)
 	{
+		// if (is_duplicate(board, x, y) || check_views(board, x, y) == VIEWS_BAD)
+		// 	continue ;				
 		if (is_duplicate(board, x, y))
 			continue ;				
 		else if (x == g_size - 1 || y == g_size - 1)
@@ -277,7 +310,7 @@ int	solver_setknown(int *board, int x, int y)
 	
 	value = 0;
 	is_set = false;
-	if (board[x + y * g_size] && !(y == g_size - 1 && x == g_size - 1))
+	if (board[x + y * g_size])
 		return (L_search_compact(board, x, y));
 	while (++value <= g_size)
 	{
@@ -288,7 +321,7 @@ int	solver_setknown(int *board, int x, int y)
 				check_views(board, x, y) == VIEWS_BAD)
 			continue ;
 		if (L_search_compact(board, x, y) == IS_SOLVED)
-				return (IS_SOLVED);
+			return (IS_SOLVED);
 	}
 	return (UNSOLVABLE_BOARD);
 }

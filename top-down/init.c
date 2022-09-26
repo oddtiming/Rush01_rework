@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: ismaelyahyaouiracine <ismaelyahyaouirac    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:59 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/03 23:35:52 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/09/25 15:12:49 by ismaelyahya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	init_map(t_map *map, char *views)
 
 	map->views = malloc(4 * map->size * sizeof(uid_t));
 	if (!map->views)
-		return ();
+		return (1);
 	i = -1;
 	while (++i < map->size * 4)
 		map->views[i] = (views[2 * i] - '0');

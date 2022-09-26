@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rush01.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iyahoui- <iyahoui-@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: ismaelyahyaouiracine <ismaelyahyaouirac    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:21:55 by iyahoui-          #+#    #+#             */
-/*   Updated: 2022/02/03 15:13:39 by iyahoui-         ###   ########.fr       */
+/*   Updated: 2022/09/25 15:15:02 by ismaelyahya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ bool	solver(t_map *map, uid_t pos);
 //UTILS
 int		ft_sqrt(int nb);
 bool	is_digit(char c);
-void	print_views(uid_t *views, int map_size);
-bool	print_board(t_pos *map, uid_t size);
+void	print_views(int *views);
+int		print_board(int *board);
+// void	print_views(uid_t *views, int map_size);
+// bool	print_board(t_pos *map, uid_t size);
 
 //Need to update modify board integration
 
