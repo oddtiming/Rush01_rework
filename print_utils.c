@@ -1,5 +1,48 @@
 #include "rush01.h"
 
+int	print_board(int *board)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	while (i < g_size * g_size)
+	{
+		c = board[i] + '0';
+		write (1, &c, 1);
+		if ((i + 1) % g_size)
+			write (1, " ", 1);
+		else
+			write(1, "\n", 1);
+		i++;
+	}
+	return (0);
+}
+
+/****************************************/
+/*          Utils for debugging         */
+/****************************************/
+
+void	print_views(int *views)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	write(1, " view\n", sizeof(" view\n"));
+	while (i < g_size * 4)
+	{
+		c = views[i] + '0';
+		write (1, &c, 1);
+		if ((i + 1) % g_size)
+			write (1, " ", 1);
+		else
+			write (1, "\n", 1);
+		i++;
+	}
+	return ;
+}
+
 static void	print_body(int *views, int *board, int *dimensions, int line_pos)
 {
 	int		i;
@@ -117,6 +160,7 @@ void	print_possible_values(int *possible_values)
 	int	*box_dimensions;
 	int	*views;
 
+	views = NULL;
 	views = get_views(views);
 	if (!views)
 		return ;

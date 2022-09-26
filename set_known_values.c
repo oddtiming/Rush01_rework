@@ -14,9 +14,7 @@ static void	place_top(int *board, int *views)
 		{
 			j = 0;
 			while (++j <= g_size)
-			{
 				board[(j - 1) * g_size + i] = j;
-			}
 		}
 		i++;
 	}
