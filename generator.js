@@ -6,9 +6,9 @@
 
 //Global Variables//
 var  solution, col, squares, clueSquares=[], clearBoard, newPuzzle, solve, checkSolution, hintButton, hints,htext;
-var  PZ_SIZE = 10;
-var  values_str = "1234567890";
-var	 input_arr = [1,2,3,4,5,6,7,8,9,10];
+var  PZ_SIZE = 8;
+var  values_str = "12345678";
+var	 input_arr = [1,2,3,4,5,6,7,8];
 
 //P5 Setup//
 function setup(){
@@ -277,24 +277,7 @@ class Tower{
     this.clueSet=sortClues(clues.slice());
     this.r=this.clueSet.r.map(e=>getPoss(e));
     this.c=this.clueSet.c.map(e=>getPoss(e));
-    // this.grid=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
-    this.grid=[
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0]];
-      // [0,0,0,0,0,0],
-      // [0,0,0,0,0,0],
-      // [0,0,0,0,0,0],
-      // [0,0,0,0,0,0],
-      // [0,0,0,0,0,0],
-      // [0,0,0,0,0,0]];
+    this.grid=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
     
     this.cellPoss=[];
     this.c=crossCheck(this.c,this.r);
