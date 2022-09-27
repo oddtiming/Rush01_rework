@@ -1,17 +1,16 @@
 /**
  * Can be compiled on codepen.io
- * original code from
  * https://codepen.io/rs_zdjn/pen/dyoYJjo?editors=0010
+ * original code from https://codepen.io/rs_zdjn
  */
 
 //Global Variables//
 var  solution, col, squares, clueSquares=[], clearBoard, newPuzzle, solve, checkSolution, hintButton, hints,htext;
 
-
+/** Modify these values for sizes 7-9 **/
 var  PZ_SIZE = 8;
 var  values_str = "12345678";
 var	 input_arr = [1,2,3,4,5,6,7,8];
-
 
 //P5 Setup//
 function setup(){

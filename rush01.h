@@ -40,14 +40,13 @@ void	set_known_values(t_rush01 *s);
 /* set_possible_values.c */
 void	set_possible_values(t_rush01 *s);
 
-/* solver.c */
+/* check_solution.c */
 int		check_views(t_rush01 *s, int x, int y);
+bool	is_duplicate(int *board, int x, int y);
 
 /* solver.c */
-bool	is_duplicate(int *board, int x, int y);
 int		solver(t_rush01 *s, int x, int y);
 int		solver_setknown(int *board, int x, int y);
-int		set_next_value(int *board, int x, int y);
 
 /* print_utils.c */
 void	print_views(int *views);
