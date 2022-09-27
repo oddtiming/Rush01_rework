@@ -84,17 +84,11 @@ static void	place_right(int *board, int *views)
 	return ;
 }
 
-void	set_known_values(int *board)
+void	set_known_values(t_rush01 *s)
 {
-	int	*views;
-
-	views = 0;
-	views = get_views(views);
-	if (!views)
-		return ;
-	place_top(board, views);
-	place_bottom(board, views);
-	place_left(board, views);
-	place_right(board, views);
+	place_top(s->board, s->views);
+	place_bottom(s->board, s->views);
+	place_left(s->board, s->views);
+	place_right(s->board, s->views);
 	return ;
 }

@@ -56,5 +56,4 @@ dkms.conf
 .git
 *.swp
 .vscode
-pipex
 obj/*

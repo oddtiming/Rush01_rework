@@ -23,6 +23,21 @@ int	print_board(int *board)
 /*          Utils for debugging         */
 /****************************************/
 
+int	print_poss_vals_raw(int *board)
+{
+	int		i;
+
+	i = 0;
+	while (i < g_size * g_size)
+	{
+		printf("%d ", board[i]);
+		if ((i + 1) % g_size == 0)
+			printf("\n");
+		i++;
+	}
+	return (0);
+}
+
 void	print_views(int *views)
 {
 	int		i;
@@ -63,7 +78,7 @@ static void	print_body(int *views, int *board, int *dimensions, int line_pos)
 			k = 0;
 			while (k < dimensions[0])
 			{
-				if (board[j + line_pos * g_size] & 1 << (k + 1 + (i * dimensions[1])))
+				if (board[j + line_pos * g_size] & 1 << (k + 1 + (i * dimensions[0])))
 					ft_putchar(k + 1 + (i * dimensions[0]) + '0');
 				else
 					ft_putchar('.');
@@ -154,27 +169,22 @@ int	*calc_box_dimensions(void)
 	return (dimensions);
 }
 
-void	print_possible_values(int *possible_values)
+void	print_possible_values(t_rush01 *s)
 {
 	int	line_pos;
 	int	*box_dimensions;
-	int	*views;
 
-	views = NULL;
-	views = get_views(views);
-	if (!views)
-		return ;
 	line_pos = 0;
 	box_dimensions = calc_box_dimensions();
-	print_extremities(views + (0 * g_size), box_dimensions[0]);
+	print_extremities(s->views + (0 * g_size), box_dimensions[0]);
 	while (line_pos < g_size)
 	{
 		print_separator(box_dimensions[0]);
-		print_body(views, possible_values, box_dimensions, line_pos);
+		print_body(s->views, s->poss_vals, box_dimensions, line_pos);
 		line_pos++;
 	}
 	print_separator(box_dimensions[0]);
-	print_extremities(views + (1 * g_size), box_dimensions[0]);
+	print_extremities(s->views + (1 * g_size), box_dimensions[0]);
 	free (box_dimensions);
 	return ;
 }

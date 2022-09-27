@@ -1,24 +1,16 @@
 #include "rush01.h"
 
-// bool	parse_inputs()
-
-
-
 /**
- * @brief Get the map size object. Will check whether the input is valid
- * 
- * @param argc 	to check that argc == 2
- * @param argv	to check that input is properly parsed
- * @return int	:	0 if the args are not valid, map_size otherwise
+ * Parsing is done here
  */
-int	set_g_size(int argc, char *argv[])
+static int	set_g_size(int argc, char *argv[])
 {
 	int		nb_views;
 	char	biggest_entry;
 	int		i;
 
 	if (argc != 2 || !is_digit(argv[1][0]))
-		return (0);
+		return (EXIT_FAILURE);
 	i = 1;
 	nb_views = 1;
 	biggest_entry = 0;
@@ -31,40 +23,37 @@ int	set_g_size(int argc, char *argv[])
 		nb_views += 1;
 		i += 2;
 	}
-	if (!is_digit(argv[1][i - 1]) || nb_views % 4 || \
-			biggest_entry > nb_views / 4)
-		return (0);
 	g_size = nb_views / 4;
-	return (g_size);
+	if (!is_digit(argv[1][i - 1]) || nb_views % 4 || biggest_entry > g_size)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-int	*get_views(int *views)
+int	init(t_rush01 *s, int argc, char **argv)
 {
-	static int	*static_views;
+	int	i;
+	
+	if (set_g_size(argc, argv))
+		return (EXIT_FAILURE);
+	
+	s->bit_mask = ((ft_exp(2, g_size) - 1) << 1);
+	
+	s->board = ft_calloc(g_size * g_size * sizeof(int));
+	if (!s->board)
+		return err_msg("Malloc Error\n");
+	
+	s->poss_vals = ft_calloc(g_size * g_size * sizeof(int));
+	if (!s->poss_vals)
+		return err_msg("Malloc Error\n");
 
-	if (!static_views && views)
-		static_views = views;
-	return (static_views);
-}
-
-int	*parse_views(int *views, char *views_string)
-{
-	int		i;
-
+	s->views = malloc(4 * g_size * sizeof(int));
+	if (!s->views)
+		return err_msg("Malloc Error\n");
 	i = 0;
-	if (!views || !views_string)
-		return (NULL);
 	while (i < g_size * 4)
 	{
-		views[i] = (views_string[2 * i] - '0');
+		s->views[i] = (argv[1][2 * i] - '0');
 		i++;
 	}
-	init_views(views);
-	return (views);
-}
-
-int	*init_views(int *views)
-{
-	get_views(views);
-	return (views);
+	return (EXIT_SUCCESS);
 }

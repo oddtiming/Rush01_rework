@@ -51,3 +51,23 @@ size_t	ft_strlen(char *s)
 		i++;
 	return (i);
 }
+
+int	err_msg(char *msg)
+{
+	write(2, msg, ft_strlen(msg));
+	return (EXIT_FAILURE);
+}
+
+void	*ft_calloc(size_t sz)
+{
+	char	*mem;
+	size_t	i;
+
+	mem = malloc(sz);
+	if (!mem)
+		return (NULL);
+	i = 0;
+	while (i < sz)
+		mem[i++] = 0;
+	return (mem);
+}
