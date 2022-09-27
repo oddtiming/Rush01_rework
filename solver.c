@@ -7,16 +7,17 @@ int	set_next_value(t_rush01 *s, int x, int y)
 	
 	next_value = s->board[at(x, y)];
 	if (next_value == 0)
-		next_value = smallest_bit(s->poss_vals[at(x, y)]);
+		next_value = largest_bit(s->poss_vals[at(x, y)]);
 	while ((s->poss_vals[at(x, y)] & (1 << next_value)) == 0)
 	{
-		if (++next_value > g_size)
+		if (next_value > g_size)
 		{
 			s->board[at(x, y)] = 0;
 			break;
 		}
-		next_value++;
+		next_value--;
 	}
+	s->board[at(x, y)] = next_value;
 	return (s->board[at(x, y)]);
 }
 
@@ -52,12 +53,14 @@ int	L_search(t_rush01 *s, int x, int y, int (*f)(t_rush01 *, int, int))
 // |               Yes                  No
 // |                v                    |
 // |-<--No-----|VIEWS_OK?|-->-Yes-->|is last_pos?|--Yes--> return (IS_SOLVED)
+
 int	solver(t_rush01 *s, int x, int y)
 {
 	int	pos;
 	
 	pos = at(x, y);
 	s->board[pos] = 0;
+	// while (set_next_value(s, x, y))
 	while (++(s->board[pos]) <= g_size)
 	{
 		if (is_duplicate(s->board, x, y) || (check_views(s, x, y)))

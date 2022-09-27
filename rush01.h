@@ -59,6 +59,7 @@ int		*calc_box_dimensions(void);
 bool	is_digit(char c);
 int		ft_exp(int base, int e);
 int		smallest_bit(int nb);
+int		largest_bit(int nb);
 void	ft_putchar(int c);
 int		at(int x, int y);
 void	unset_bit(int *i, int b);

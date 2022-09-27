@@ -46,8 +46,8 @@ int	init(t_rush01 *s, int argc, char **argv)
 	if (!s->poss_vals)
 		return err_msg("Malloc Error\n");
 
-	s->views = malloc(4 * g_size * sizeof(int));
-	if (!s->views)
+	s->views = malloc(4 * g_size * sizeof(*s->views));
+	if (s->views == NULL)
 		return err_msg("Malloc Error\n");
 	i = 0;
 	while (i < g_size * 4)

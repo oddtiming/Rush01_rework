@@ -7,6 +7,7 @@ int	main(int argc, char *argv[])
 	t_rush01	*s;
 
 	s = malloc(sizeof(t_rush01));
+
 	if (!s)
 		return (err_msg("Malloc Error\n"));
 		

@@ -22,6 +22,18 @@ int	smallest_bit(int nb)
 	return (i);
 }
 
+int	largest_bit(int nb)
+{
+	int i;
+
+	if (!nb || nb & (1 << 0))
+		return (0);
+	i = g_size;
+	while (((1 << i) & nb) == 0 && i > 0)
+		i--;
+	return (i);
+}
+
 bool	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
